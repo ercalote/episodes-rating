@@ -1,0 +1,253 @@
+﻿.rating {
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+.rating-mini {
+    font-weight: bold;
+    font-size: 1px;
+    padding: 3px;
+}
+
+.rating-header {
+    background: #272727;
+    color: white;
+}
+
+.rating-garbage {
+    background: #003b62;
+    color: white;
+}
+
+.rating-garbage a {
+    color: white;
+}
+
+.rating-awful {
+    background: #CE2717;
+    color: white;
+}
+
+.rating-awful a {
+    color: white;
+}
+
+.rating-bad {
+    background: #EE9118;
+    color: ghostwhite;
+}
+
+.rating-bad a {
+    color: ghostwhite;
+}
+
+.rating-average {
+    background: #F6E034;
+    color: dimgray;
+}
+
+.rating-average a {
+    color: dimgray;
+}
+
+.rating-good {
+    background: #91BA60;
+    color: white;
+}
+
+.rating-good a {
+    color: white;
+}
+
+.rating-excellent {
+    background: #38934f;
+    color: ghostwhite;
+}
+
+.rating-excellent a {
+    color: ghostwhite;
+}
+
+.rating-total {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    min-width: 30px;
+    min-height: 25px;
+    text-align: center;
+}
+
+.ratings {
+    margin: 1em 0;
+    width: 100%;
+}
+
+.ratings td {
+    padding: 5px;
+}
+
+.rotate {
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    width: 1.5em;
+}
+
+.rotate div {
+    -moz-transform: rotate(-90.0deg); /* FF3.5+ */
+    -o-transform: rotate(-90.0deg); /* Opera 10.5 */
+    -webkit-transform: rotate(-90.0deg); /* Saf3.1+, Chrome */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083); /* IE6,IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
+    margin-left: -10em;
+    margin-right: -10em;
+}
+
+.legend td {
+    width: 100px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.legend-header {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+.legend .rating {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.legend .range {
+    padding-left: 10px;
+}
+
+.highlight {
+    opacity: 0.75;
+}
+
+td a {
+    width: 100%;
+    display: block;
+    padding: 10px;
+}
+
+.square {
+    padding: 10px;
+}
+
+.loader {
+  position: relative;
+  text-align: center;
+  margin: 15px auto 35px auto;
+  z-index: 9999;
+  display: block;
+  width: 80px;
+  height: 80px;
+  border: 10px solid rgba(0, 0, 0, .3);
+  border-radius: 50%;
+  border-top-color: #000;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.share {
+    margin: 0 0 10px 30px;
+}
+
+.year {
+    margin: 4px 0  9px 0;
+}
+
+.ui-autocomplete {
+    list-style-type: none;
+}
+
+#loading {
+    max-height: 350px;
+    overflow: auto;
+}
+
+.ui-autocomplete-row {
+    padding: 8px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ccc;
+    font-weight: bold;
+}
+
+.ui-autocomplete-row:hover {
+    background-color: #ddd;
+}
+
+.ui-autocomplete-row img {
+    width: 50px;
+    margin-right: 20px;
+    float: left;
+}
+
+.ui-autocomplete-row p {
+    overflow: hidden;
+}
+
+/** MODAL STYLING **/
+.modal-content {
+    border-radius: 0px;
+    box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.7);
+}
+
+.modal-backdrop.show {
+  opacity: 0.75;
+}
+
+.loader-txt {
+  p {
+    font-size: 13px;
+    color: #666;
+    small {
+      font-size: 11.5px;
+      color: #999;
+    }
+  }
+}
+
+#output {
+  padding: 25px 15px;
+  background: #222;
+  border: 1px solid #222;
+  max-width: 350px;
+  margin: 35px auto;
+  font-family: 'Roboto', sans-serif !important;
+  p.subtle {
+    color: #555;
+    font-style: italic;
+    font-family: 'Roboto', sans-serif !important;
+  }
+  h4 {
+    font-weight: 300 !important;
+    font-size: 1.1em;
+    font-family: 'Roboto', sans-serif !important;
+  }
+  p {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 0.9em;
+    b {
+      text-transform: uppercase;
+      text-decoration: underline;
+    }
+  }
+}

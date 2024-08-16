@@ -1,0 +1,255 @@
+﻿@model IndexModel
+
+@{
+    ViewData["Title"] = Model.Series.Title + " Episodes Rating";
+    ViewData["OgTitle"] = Model.Series.Title;
+    ViewData["OgUrl"] = "http://episodesrating.com/" + Model.Series.ImdbId + "/" + Model.Series.Friendly;
+    ViewData["OgImage"] = Model.Series.ImageUrl;
+    ViewData["OgDesc"] = Model.Series.Description;
+}
+
+@{
+    var seasons = Model.Series.Episodes.OrderBy(x => x.EpisodeNumber).GroupBy(x => x.SeasonNumber).OrderBy(x => x.Key).ToList();
+    var bestEpisode = Model.Series.Episodes.Where(e => e.Rating != null).OrderByDescending(e => e.Rating).FirstOrDefault();
+    var worstEpisode = Model.Series.Episodes.Where(e => e.Rating != null).OrderBy(e => e.Rating).FirstOrDefault();
+    var nrColumns = seasons.Count();
+    var nrRows = seasons.Max(x => x.Count());
+    var classes = new Dictionary<(double Min, double Max), string>
+    {
+        [(-0.1, 5.0)] = "rating-garbage",
+        [(5.0, 6.0)] = "rating-awful",
+        [(6.0, 7.0)] = "rating-bad",
+        [(7.0, 8.0)] = "rating-average",
+        [(8.0, 9.0)] = "rating-good",
+        [(9.0, 10.1)] = "rating-excellent"
+    };
+}
+
+<div class="single-content">
+    <div class="top-header span_top">
+        <div class="menu">
+            <ul>
+                <li><a href="/" title="EpisodesRating.com"><div class="hm"><i class="home1"></i><i class="home2"></i></div></a></li>
+            </ul>
+        </div>
+        <div class="search v-search">
+            <input type="text" id="search_data" placeholder="enter TV series title..." autocomplete="off" onfocus="if (this.value == 'enter TV series title...') {this.value = '';};" onblur="if (this.value == '') {this.value = 'enter TV series title...';}" />
+        </div>
+        <div class="logo">
+            <p>@ViewData["Title"]</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="reviews-section">
+        <div class="col-md-2 reviews-grids">
+            <div class="review">
+                <h3>@(Model.Series.Title)</h3>
+                <p class="year">@(Model.Series.Year)</p>
+                <div class="movie-pic">
+                    @if (Model.Series.ImageUrl != null)
+                    {
+                        <a href="https://www.imdb.com/title/@Model.Series.ImdbId/" target="_blank" title="@Model.Series.Title at IMDb.com"><img src="@Model.Series.ImageUrl" /></a>
+                    }
+                </div>
+                <div class="review-info">
+                    <table class="ratings">
+                        @{ var avgRating = Model.Series.AvgEpisodeRating; }
+                        @if (avgRating.HasValue)
+                        {
+                            var cssClass = classes.Single(x => x.Key.Min <= avgRating.Value && avgRating.Value < x.Key.Max).Value;
+
+                            <tr>
+                                <td style="width:100%;">Episodes Rating</td>
+                                <td>
+                                    <div class="rating square @cssClass">@((Math.Truncate(avgRating.Value * 10) / 10).ToString("0.0"))</div>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (Model.Series.Rating != null)
+                        {
+                            var cssClass = classes.Single(x => x.Key.Min <= Model.Series.Rating.Value && Model.Series.Rating.Value < x.Key.Max).Value;
+
+                            <tr>
+                                <td style="width:100%;">IMDb</td>
+                                <td>
+                                    <div class="rating square @cssClass">@((Math.Truncate(Model.Series.Rating.Value * 10) / 10).ToString("0.0"))</div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="best-review">
+                @Model.Series.Description
+            </div>
+            <div class="best-review">
+                <h4>Legend</h4>
+                <table class="legend">
+                    <tr>
+                        <td class="rating rating-excellent">excellent</td>
+                        <td class="range">9.0 - 10.0</td>
+                    </tr>
+                    <tr>
+                        <td class="rating rating-good">good</td>
+                        <td class="range">8.0 - 9.0</td>
+                    </tr>
+                    <tr>
+                        <td class="rating rating-average">average</td>
+                        <td class="range">7.0 - 8.0</td>
+                    </tr>
+                    <tr>
+                        <td class="rating rating-bad">bad</td>
+                        <td class="range">6.0 - 7.0</td>
+                    </tr>
+                    <tr>
+                        <td class="rating rating-awful">awful</td>
+                        <td class="range">5.0 - 6.0</td>
+                    </tr>
+                    <tr>
+                        <td class="rating rating-garbage">garbage</td>
+                        <td class="range">0.0 - 5.0</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-10 side-bar">
+            <div class="share">
+                <div class="sharethis-inline-share-buttons"></div>
+            </div>
+
+            @Html.Partial("_PulsePartial.cshtml", Model)
+
+            <h4>Matrix</h4>
+            <table class="rating-table">
+                <tr class="rating-total">
+                    <td class="rotate rating-total" rowspan="@(nrRows + 3)"><div style="margin-top:65px;">episode number</div></td>
+                </tr>
+
+                <tr class="rating-total">
+                    <td colspan="@(nrColumns + 1)"><div style="margin-left:40px;">season number</div></td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    @foreach (var i in Enumerable.Range(1, nrColumns))
+                    {
+                    <td class="rating rating-header square">@i</td>
+                    }
+                </tr>
+
+                @for (int i = 0; i < nrRows; i++)
+                {
+                <tr>
+                    <td class="rating rating-header square">@(i + 1)</td>
+
+                    @for (int j = 0; j < nrColumns; j++)
+                        {
+                    @if ((@seasons[j].Count() - 1) >= i)
+                            {
+                                var episode = seasons[j].ToList()[i];
+                                var rating = episode.Rating;
+
+                    @if (rating != null)
+                                {
+                                    var cssClass = classes.Single(x => x.Key.Min <= rating && rating < x.Key.Max).Value;
+
+                    <td class="rating @cssClass rating-hoverable-column rating-hoverable-row"
+                        title="@(episode.SeasonNumber).@(episode.EpisodeNumber). @(episode.Title)">
+                        <a href="@(episode.ImdbLink)" target="_blank">@rating.Value.ToString("F1")</a>
+                    </td>
+                                }
+                                else
+                                {
+                    <td class="rating rating-none"></td>
+                                }
+                            }
+                            else
+                            {
+                    <td></td>
+                            }
+                        }
+                </tr>
+                }
+
+                <tr class="rating-total">
+                    <td colspan="2">&nbsp;</td>
+                    <td colspan="@nrColumns">season average</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">&nbsp;</td>
+
+                    @for (int i = 0; i < nrColumns; i++)
+                    {
+                        if (seasons[i].Any(x => x.Rating.HasValue))
+                        {
+                            var rating = @seasons[i].Where(x => x.Rating.HasValue).Average(x => x.Rating.Value);
+                            var cssClass = classes.Single(x => x.Key.Min <= rating && x.Key.Max > rating).Value;
+
+                    <td class="rating @cssClass rating-hoverable-column square">@((Math.Truncate(rating * 10) / 10).ToString("0.0"))</td>
+                        }
+                        else
+                        {
+                    <td class="rating">&nbsp;</td>
+                        }
+                    }
+                </tr>
+            </table>
+            <br />
+
+            @if (bestEpisode != null)
+            {
+            <br />
+            <strong>Best episode [@((Math.Truncate(bestEpisode.Rating.Value * 10) / 10).ToString("0.0"))] S @bestEpisode.SeasonNumber  E @bestEpisode.EpisodeNumber: @bestEpisode.Title</strong>
+            <p>@bestEpisode.Description</p>
+            }
+
+            @if (worstEpisode != null)
+            {
+            <br />
+            <strong>Worst episode [@((Math.Truncate(worstEpisode.Rating.Value * 10) / 10).ToString("0.0"))] S @worstEpisode.SeasonNumber E @worstEpisode.EpisodeNumber: @worstEpisode.Title</strong>
+            <p>@worstEpisode.Description</p>
+            }
+
+            <div id="disqus_thread"></div>
+            <script>
+
+                /**
+                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                /*
+                var disqus_config = function () {
+                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                */
+                (function () { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://episodesrating.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="review-slider">
+    <ul id="flexisel">
+        @foreach (var other in Model.OtherSeries)
+        {
+            <li>
+                <div>
+                    <a href="/@(other.ImdbId)/@(other.Friendly)" title="@(other.Title) episodes rating">
+                        <img src="@(other.ImageUrl)" alt="@other.Title" title="@other.Title" />
+                    </a>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

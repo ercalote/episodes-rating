@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpisodesRatingFunctionApp", "..\EpisodesRatingFunctionApp\EpisodesRatingFunctionApp\EpisodesRatingFunctionApp.csproj", "{D6159DB5-E065-4987-87E5-010C32A2B97C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpisodesRatingModel", "EpisodesRatingModel\EpisodesRatingModel.csproj", "{9EE2B63D-1E92-48CF-99E0-37A0B3ABBBC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpisodesRatingConsoleApp", "EpisodesRatingConsoleApp\EpisodesRatingConsoleApp.csproj", "{CB41718D-16B5-44B0-9711-FABBAFB8FF17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpisodesRatingsWeb", "EpisodesRatingsWeb\EpisodesRatingsWeb.csproj", "{AF9663A0-FF51-4FDA-87BA-0494A8A57DA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpisodesRatingApiClients", "EpisodesRatingApiClients\EpisodesRatingApiClients.csproj", "{50E8D3CD-BD44-4222-9D04-1AD7BE8B7DAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EpisodesRatingSitemap", "EpisodesRatingSitemap\EpisodesRatingSitemap.csproj", "{B3FE5617-E089-4558-B0D9-5F9A11CD6B18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6159DB5-E065-4987-87E5-010C32A2B97C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6159DB5-E065-4987-87E5-010C32A2B97C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6159DB5-E065-4987-87E5-010C32A2B97C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6159DB5-E065-4987-87E5-010C32A2B97C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE2B63D-1E92-48CF-99E0-37A0B3ABBBC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE2B63D-1E92-48CF-99E0-37A0B3ABBBC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE2B63D-1E92-48CF-99E0-37A0B3ABBBC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE2B63D-1E92-48CF-99E0-37A0B3ABBBC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB41718D-16B5-44B0-9711-FABBAFB8FF17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB41718D-16B5-44B0-9711-FABBAFB8FF17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB41718D-16B5-44B0-9711-FABBAFB8FF17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB41718D-16B5-44B0-9711-FABBAFB8FF17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9663A0-FF51-4FDA-87BA-0494A8A57DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9663A0-FF51-4FDA-87BA-0494A8A57DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9663A0-FF51-4FDA-87BA-0494A8A57DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9663A0-FF51-4FDA-87BA-0494A8A57DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50E8D3CD-BD44-4222-9D04-1AD7BE8B7DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50E8D3CD-BD44-4222-9D04-1AD7BE8B7DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50E8D3CD-BD44-4222-9D04-1AD7BE8B7DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50E8D3CD-BD44-4222-9D04-1AD7BE8B7DAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3FE5617-E089-4558-B0D9-5F9A11CD6B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3FE5617-E089-4558-B0D9-5F9A11CD6B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3FE5617-E089-4558-B0D9-5F9A11CD6B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3FE5617-E089-4558-B0D9-5F9A11CD6B18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FAB7CE0A-9E74-452D-8D60-AE4EB07756CA}
+	EndGlobalSection
+EndGlobal

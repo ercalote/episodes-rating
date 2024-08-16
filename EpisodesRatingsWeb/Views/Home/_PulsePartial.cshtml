@@ -1,0 +1,136 @@
+﻿@model IndexModel
+
+@{
+    var episodes = Model.Series.Episodes.Where(x => x.Rating != null).OrderBy(x => x.SeasonNumber).ThenBy(x => x.EpisodeNumber).Select((x, i) => new { number = i + 1, rating = x.Rating }).ToList();
+    var nrEpisodes = episodes.Count();
+}
+
+<h4>Pulse</h4>
+<div id="pulseContainer"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@@7"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@observablehq/stdlib"></script>
+<script type="module">
+    var data = @Html.Raw(Json.Serialize(episodes));
+
+    // Declare the chart dimensions and margins.
+    const width = 640;
+    const height = 200;
+    const marginTop = 20;
+    const marginRight = 20;
+    const marginBottom = 30;
+    const marginLeft = 40;
+    const { DOM, require } = new observablehq.Library;
+
+    // Create the scales.
+    const x = d3.scaleLinear()
+        .domain([0, @nrEpisodes])
+        .range([marginLeft, width - marginRight]);
+
+    const y = d3.scalePow()
+        .domain([1, 10]).nice()
+        .range([height - marginBottom, marginTop])
+        .exponent(1.5);
+
+    // Create the path generator.
+    const line = d3.line()
+        .curve(d3.curveStep)
+        .defined(d => !isNaN(d.rating))
+        .x(d => x(d.number))
+        .y(d => y(d.rating));
+
+    // Create the SVG container.
+    const svg = d3.select('#pulseContainer') // d3.create("svg")
+        .append('svg')
+        .attr("width", width)
+        .attr("height", height)
+        //.attr("viewBox", [0, 0, width, height])
+        //.attr("style", "max-width: 100%; height: auto;");
+        .call(responsivefy);
+
+    svg.append("g")
+        .attr("transform", `translate(0,${height - marginBottom})`)
+        .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
+        .call(g => g.select(".domain").remove());
+
+    svg.append("g")
+        .attr("transform", `translate(${marginLeft},0)`)
+        .attr("class", "axisRed")
+        .call(d3.axisLeft(y).tickSize(-width, 0, 0))
+        .call(g => g.select(".domain").remove())
+        .call(g => g.select(".tick:last-of-type text").append("tspan").text(""));
+
+    // Append the color gradient.
+    const gradient = DOM.uid();
+    svg.append("linearGradient")
+        .attr("id", gradient.id)
+        .attr("gradientUnits", "userSpaceOnUse")
+        .attr("x1", x(0)).attr("y1", 0)
+        .attr("x2", x(0)).attr("y2", height)
+        .selectAll("stop")
+        .data([
+            { offset: "13%", color: "#38934f" },
+            { offset: "25%", color: "#91BA60" },
+            { offset: "37%", color: "#F6E034" },
+            { offset: "48%", color: "#EE9118" },
+            { offset: "58%", color: "#CE2717" },
+            { offset: "67%", color: "#003b62" },
+        ])
+        .enter().append("stop")
+        .attr("offset", function (d) { return d.offset; })
+        .attr("stop-color", function (d) { return d.color; });
+
+    // Append the line.
+    svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", gradient)
+        .attr("stroke-width", 3)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("d", line);
+
+    // Append axis titles
+    /*svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "middle")
+        .attr("x", width)
+        .attr("y", height - 6)
+        .text("Episode number");
+
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "middle")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Episode rating");*/
+
+    // Append the SVG element.
+    // pulseContainer.append(svg.node());
+
+    function responsivefy(svg) {
+
+        // Container is the DOM element, svg is appended.
+        // Then we measure the container and find its
+        // aspect ratio.
+        const container = d3.select(svg.node().parentNode),
+            width = parseInt(svg.style('width'), 10),
+            height = parseInt(svg.style('height'), 10),
+            aspect = width / height;
+
+        // Add viewBox attribute to set the value to initial size
+        // add preserveAspectRatio attribute to specify how to scale
+        // and call resize so that svg resizes on page load
+        svg.attr('viewBox', `0 0 ${width} ${height}`).
+            attr('preserveAspectRatio', 'xMinYMid').
+            call(resize);
+
+        d3.select(window).on('resize.' + container.attr('id'), resize);
+
+        function resize() {
+            const targetWidth = parseInt(container.style('width'));
+            svg.attr('width', targetWidth);
+            svg.attr('height', Math.round(targetWidth / aspect));
+        }
+    }
+</script>

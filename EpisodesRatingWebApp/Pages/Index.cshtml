@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    
+    <form method="post" enctype="multipart/form-data" asp-controller="Search" asp-action="GetByImdbId">
+        <label>IMDB id:</label><br />
+        <input type="text" name="ImdbId" /><br /><br />
+        <input type="submit" value="Get" />
+    </form>
+
+    @ViewBag.LambdaResult
+
+</div>

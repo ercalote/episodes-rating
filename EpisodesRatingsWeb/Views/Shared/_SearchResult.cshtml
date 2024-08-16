@@ -1,0 +1,26 @@
+﻿@model EpisodesRatingModel.SearchResult
+
+@if (Model != null && Model.Search != null)
+{
+    var i = 0;
+    @foreach (var result in Model.Search)
+    {
+        if (i % 2 == 0)
+        {
+            @:<div class="row">
+        }
+        i++;
+
+        <div class="col-6">
+            <a href="/@result.ImdbId/@result.Friendly">
+                <img style="height: 80px;" src="@result.ImageUrl" />
+                @result.Title
+            </a>
+        </div>
+
+        @if (i % 2 == 0)
+        {
+            @:</div>
+        }
+    }
+}
